@@ -54,10 +54,11 @@ export const treatmentGroups: TreatmentGroup[] = [
     ],
   },
   {
-    id: "specialist", title: "Specialist", blurb: "Jaw pain, sedation and digital dentistry.",
+    id: "specialist", title: "Specialist", blurb: "Jaw pain, sedation, special needs and digital dentistry.",
     items: [
       { slug: "tmj-jaw-pain", title: "TMJ & jaw pain" },
       { slug: "sedation-dentistry", title: "Sedation dentistry" },
+      { slug: "special-needs-dentistry", title: "Special needs dentistry" },
       { slug: "digital-dentistry", title: "Digital dentistry" },
     ],
   },

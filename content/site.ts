@@ -1,48 +1,84 @@
-// Single source of truth for business facts. Values wrapped in [brackets] are placeholders:
-// they show a "TODO" badge in dev and are hidden in production (see lib/placeholder.ts).
+// Single source of truth for business facts, taken from the clinic's live site (alphadentalstudios.com).
+// Values wrapped in [brackets] are placeholders: TODO badge in dev, hidden in production (lib/placeholder.ts).
+export type Branch = {
+  id: string;
+  name: string;
+  address: { line1: string; line2?: string; locality: string; city: string; state: string; postalCode: string; country: string };
+  landmark?: string;
+  phone: string;
+  mapsUrl: string;
+  geo: { lat: number; lng: number };
+};
+
+export const branches: Branch[] = [
+  {
+    id: "ra-puram",
+    name: "R.A. Puram",
+    address: {
+      line1: "Plot No. 65, First Floor, Old Door No. 2/4, Thiruvengadam Street",
+      locality: "Raja Annamalai Puram (R.A. Puram)",
+      city: "Chennai", state: "Tamil Nadu", postalCode: "600028", country: "IN",
+    },
+    landmark: "Next to CSI St. Luke's Church", // from the clinic brief; confirm
+    phone: "+91 93639 37900",
+    mapsUrl: "https://g.co/kgs/RGN6Pp1",
+    geo: { lat: 0, lng: 0 }, // TODO: copy from the Google Maps pin
+  },
+  {
+    id: "kottivakkam",
+    name: "Kottivakkam",
+    address: {
+      line1: "No. 2/311, AGS Colony, 2nd Main Road, Kannappa Nagar",
+      locality: "Kottivakkam",
+      city: "Chennai", state: "Tamil Nadu", postalCode: "600041", country: "IN",
+    },
+    phone: "+91 86374 38826",
+    mapsUrl: "https://maps.app.goo.gl/xiHkZvmhSbx2V2vVA",
+    geo: { lat: 0, lng: 0 }, // TODO
+  },
+];
+
 export const site = {
   name: "Alpha Dental Studio",
   shortName: "ADS",
   tagline: "Innovating Smiles. Inspiring Lives.",
   url: "https://alphadentalstudios.com",
-  phone: "+91 93639 37900",
+  phone: "+91 93639 37900", // main line / R.A. Puram
+  landline: "044 3503 7900",
   whatsapp: "919363937900", // digits only, for wa.me
-  email: "hello@alphadentalstudios.com", // TODO: confirm with clinic
-  address: {
-    line1: "Door No. 2, 1st Floor, Plot No. 65, Thiruvengadam Street",
-    landmark: "Next to CSI St. Luke's Church",
-    locality: "Raja Annamalai Puram (R.A. Puram)",
-    city: "Chennai",
-    state: "Tamil Nadu",
-    postalCode: "600028",
-    country: "IN",
-  },
-  geo: { lat: 0, lng: 0 }, // TODO: copy from the Google Maps pin
-  hours: [{ days: "Mo-Sa", opens: "10:00", closes: "20:00" }], // TODO: confirm Sunday
+  email: "info@alphadentalstudios.com",
+  // Primary branch drives NAP, schema and the map. Both are listed on Contact.
+  address: branches[0].address,
+  landmark: branches[0].landmark,
+  geo: branches[0].geo,
+  hours: [{ days: "Mo-Sa", opens: "10:00", closes: "20:00" }], // Sunday closed (per live site)
   hoursLabel: "Mon–Sat 10 AM–8 PM",
-  consultationFee: 500, // INR, TODO: confirm
-  googleMapsUrl: "[paste share link]",
+  sundayLabel: "Sunday closed",
+  consultationFee: 500, // INR. Not on the live site (Practo listing): TODO confirm
+  googleMapsUrl: branches[0].mapsUrl,
   googlePlaceId: "[for reviews widget]",
   social: {
-    facebook: "https://www.facebook.com/alphadentalstudios/",
-    instagram: "[ ]",
+    facebook: "https://www.facebook.com/alphadentalstudios",
+    instagram: "https://www.instagram.com/alphadentalstudios/",
     youtube: "[ ]",
   },
   areasServed: [
     "R.A. Puram", "Mylapore", "Alwarpet", "Mandaveli", "Adyar", "Teynampet",
     "Nandanam", "Abhiramapuram", "Kotturpuram", "Besant Nagar", "T. Nagar", "Santhome",
+    "Kottivakkam", "Thiruvanmiyur", "Neelankarai", "Palavakkam",
   ],
 } as const;
 
-export const telHref = `tel:+${site.phone.replace(/\D/g, "")}`;
+const digits = (s: string) => s.replace(/\D/g, "");
+export const telHref = (phone: string = site.phone) => {
+  const d = digits(phone).replace(/^0+/, "");
+  return `tel:+${d.startsWith("91") ? d : `91${d}`}`;
+};
 
 export function whatsappHref(message = "Hello Alpha Dental Studio, I'd like to book an appointment.") {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
-export const fullAddress = [
-  site.address.line1,
-  site.address.landmark,
-  site.address.locality,
-  `${site.address.city}, ${site.address.state} ${site.address.postalCode}`,
-];
+export function formatAddress(b: Branch) {
+  return [b.address.line1, b.address.locality, `${b.address.city}, ${b.address.state} ${b.address.postalCode}`];
+}
