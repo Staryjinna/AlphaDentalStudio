@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { FacebookIcon, InstagramIcon } from "./SocialIcons";
 import { Logo } from "./Logo";
 import { TodoBadge } from "./Todo";
-import { Spotlight } from "./Spotlight";
+import { FacebookIcon, InstagramIcon } from "./SocialIcons";
+import { ActionLink } from "./ActionLink";
 import { branches, formatAddress, site, telHref } from "@/content/site";
 import { treatmentGroups } from "@/content/treatment-groups";
 import { treatments } from "@/content/treatments";
@@ -12,31 +12,33 @@ import { mainNav } from "@/content/nav";
 
 export function Footer() {
   return (
-    <Spotlight as="div" className="mesh-dark on-dark grain mt-0 overflow-hidden pb-28 pt-20 md:pb-12">
-      <footer className="container-page relative z-10">
+    <footer className="on-dark relative overflow-hidden bg-cocoa pb-28 pt-20 md:pb-12">
+      <div aria-hidden className="pointer-events-none absolute -bottom-10 left-1/2 w-[140%] -translate-x-1/2 select-none text-center text-[clamp(4rem,15vw,13rem)] font-semibold leading-none tracking-tight outline-text opacity-60">ALPHA DENTAL</div>
+      <div className="container-page relative z-10">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Logo white />
-            <p className="mt-5 font-heading text-2xl text-white">{site.tagline}</p>
-            <ul className="mt-6 flex gap-3">
-              <li><a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="glass-dark flex h-12 w-12 items-center justify-center rounded-full text-white hover:bg-white/20"><InstagramIcon /></a></li>
-              <li><a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="glass-dark flex h-12 w-12 items-center justify-center rounded-full text-white hover:bg-white/20"><FacebookIcon /></a></li>
-              {isPlaceholder(site.social.youtube) && <li className="self-center"><TodoBadge label="TODO: YouTube" /></li>}
+            <Logo onDark />
+            <p className="mt-6 text-2xl font-semibold leading-snug text-white">{site.tagline}</p>
+            <p className="mt-4 flex items-center gap-2 text-base text-white/80"><Clock size={16} aria-hidden className="text-peach" /> {site.hoursLabel} · {site.sundayLabel}</p>
+            <ul className="mt-6 flex items-center gap-3">
+              <li><a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 text-white hover:bg-peach hover:text-cocoa"><InstagramIcon /></a></li>
+              <li><a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 text-white hover:bg-peach hover:text-cocoa"><FacebookIcon /></a></li>
+              {isPlaceholder(site.social.youtube) && <li><TodoBadge label="TODO: YouTube" /></li>}
             </ul>
-            <p className="mt-6 flex items-center gap-2 text-base text-white/85"><Clock size={16} aria-hidden className="text-champagne" /> {site.hoursLabel} · {site.sundayLabel}</p>
+            <div className="mt-8"><ActionLink book variant="light" arrow>Book appointment</ActionLink></div>
           </div>
 
           {/* NAP: kept identical to site.ts on every page */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:col-span-8">
+          <div className="grid gap-5 sm:grid-cols-2 lg:col-span-8">
             {branches.map((b) => (
-              <address key={b.id} className="glass-dark hairline rounded-2xl p-5 text-base not-italic leading-relaxed text-white/90">
-                <p className="flex items-center gap-2 font-heading text-lg font-semibold text-white"><MapPin size={16} aria-hidden className="text-champagne" /> {site.name}, {b.name}</p>
-                {formatAddress(b).map((l) => <p key={l}>{l}</p>)}
-                <p className="mt-2"><a href={telHref(b.phone)} className="inline-flex items-center gap-2 font-semibold text-white underline underline-offset-4"><Phone size={14} aria-hidden /> {b.phone}</a></p>
+              <address key={b.id} className="rounded-3xl border border-white/15 p-6 text-base not-italic leading-relaxed text-white/85">
+                <p className="flex items-center gap-2 text-lg font-semibold text-white"><MapPin size={16} aria-hidden className="text-peach" /> {site.name}, {b.name}</p>
+                <div className="mt-2">{formatAddress(b).map((l) => <p key={l}>{l}</p>)}</div>
+                <p className="mt-3"><a href={telHref(b.phone)} className="inline-flex min-h-11 items-center gap-2 font-semibold text-white underline underline-offset-4"><Phone size={14} aria-hidden /> {b.phone}</a></p>
               </address>
             ))}
             <p className="text-base text-white/85 sm:col-span-2">
-              <Mail size={14} aria-hidden className="mr-2 inline text-champagne" />
+              <Mail size={14} aria-hidden className="mr-2 inline text-peach" />
               <a href={`mailto:${site.email}`} className="text-white underline underline-offset-4">{site.email}</a>
               <span className="mx-2 text-white/40">·</span>
               <a href={telHref(site.landline)} className="text-white underline underline-offset-4">{site.landline}</a>
@@ -44,33 +46,27 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-10 border-t border-white/15 pt-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-10 border-t border-white/15 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="font-heading text-lg font-semibold text-white">Treatments</p>
-            <ul className="mt-3 space-y-1 text-base">
-              {treatmentGroups.map((g) => <li key={g.id}><Link href={`/treatments#${g.id}`} className="inline-block py-1 text-white/85 hover:text-champagne">{g.title}</Link></li>)}
-            </ul>
+            <p className="font-semibold text-white">Treatments</p>
+            <ul className="mt-3 text-base">{treatmentGroups.map((g) => <li key={g.id}><Link href={`/treatments#${g.id}`} className="inline-block py-1 text-white/80 hover:text-peach">{g.title}</Link></li>)}</ul>
           </div>
           <div>
-            <p className="font-heading text-lg font-semibold text-white">Explore</p>
-            <ul className="mt-3 space-y-1 text-base">
-              {[...mainNav, { href: "/about", label: "About" }, { href: "/book", label: "Book" }].map((n) => (
-                <li key={n.href}><Link href={n.href} className="inline-block py-1 text-white/85 hover:text-champagne">{n.label}</Link></li>
-              ))}
-            </ul>
+            <p className="font-semibold text-white">Explore</p>
+            <ul className="mt-3 text-base">{[{ href: "/about", label: "About" }, ...mainNav, { href: "/book", label: "Book" }].map((n) => <li key={n.href}><Link href={n.href} className="inline-block py-1 text-white/80 hover:text-peach">{n.label}</Link></li>)}</ul>
           </div>
           <div className="sm:col-span-2">
-            <p className="font-heading text-lg font-semibold text-white">Popular</p>
+            <p className="font-semibold text-white">Popular</p>
             <ul className="mt-3 grid gap-x-6 text-base sm:grid-cols-2">
               {["dental-implants", "root-canal-treatment", "invisalign-clear-aligners", "braces", "teeth-whitening", "gum-treatment"].map((slug) => {
                 const t = treatments.find((x) => x.slug === slug)!;
-                return <li key={slug}><Link href={`/treatments/${slug}`} className="inline-block py-1 text-white/85 hover:text-champagne">{t.title}</Link></li>;
+                return <li key={slug}><Link href={`/treatments/${slug}`} className="inline-block py-1 text-white/80 hover:text-peach">{t.title}</Link></li>;
               })}
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-white/15 pt-6 text-sm text-white/75">
+        <div className="mt-10 border-t border-white/15 pt-6 text-sm text-white/70">
           <p>Patients visit us from {site.areasServed.join(", ")}.</p>
           <p className="mt-3 flex flex-wrap gap-x-6 gap-y-1">
             <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
@@ -79,7 +75,7 @@ export function Footer() {
           </p>
           <p className="mt-3">Information on this site is general and not a substitute for an in-person examination.</p>
         </div>
-      </footer>
-    </Spotlight>
+      </div>
+    </footer>
   );
 }

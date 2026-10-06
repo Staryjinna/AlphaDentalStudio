@@ -1,15 +1,9 @@
-import { Fraunces, Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 
-export const fraunces = Fraunces({
+// Poppins is the clinic's existing brand typeface (used on the current site).
+export const poppins = Poppins({
   subsets: ["latin"],
-  axes: ["opsz"],
-  variable: "--font-fraunces",
-  display: "swap",
-});
-
-export const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
   display: "swap",
 });

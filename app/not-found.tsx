@@ -17,27 +17,27 @@ export default function NotFound() {
       ].slice(0, 8)
     : [];
   return (
-    <section className="mesh-dark on-dark grain min-h-screen overflow-hidden pt-36">
-      <div className="container-page relative z-10 max-w-2xl pb-24">
-        <p className="eyebrow-dark eyebrow">404</p>
-        <h1 className="mt-3 !text-white">We couldn&apos;t find that page</h1>
-        <p className="mt-4 text-lg text-white/80">Try a search, pick a popular treatment, or get in touch.</p>
+    <section className="min-h-screen bg-sand pt-36">
+      <div className="container-page max-w-2xl pb-24">
+        <p className="eyebrow">404</p>
+        <h1 className="mt-3">We couldn&apos;t find that page</h1>
+        <p className="mt-4 text-lg text-muted">Try a search, pick a popular treatment, or get in touch.</p>
         <form role="search" className="mt-8" onSubmit={(e) => e.preventDefault()}>
           <label htmlFor="nf-search" className="sr-only">Search treatments and doctors</label>
-          <div className="glass flex items-center gap-3 rounded-full px-5">
-            <Search size={20} className="text-brand-600" aria-hidden />
+          <div className="flex items-center gap-3 rounded-full bg-white px-5 shadow-sm">
+            <Search size={20} className="text-brown" aria-hidden />
             <input id="nf-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search treatments or doctors" className="min-h-14 w-full bg-transparent text-base text-ink placeholder:text-muted focus:outline-none" />
           </div>
         </form>
-        {hits.length > 0 && <ul className="glass mt-3 rounded-3xl p-2">{hits.map((h) => <li key={h.href}><Link href={h.href} className="block rounded-2xl px-4 py-3 text-base text-ink hover:bg-brand-100">{h.label}</Link></li>)}</ul>}
-        <p className="mt-10 font-heading text-xl text-white">Popular treatments</p>
+        {hits.length > 0 && <ul className="mt-3 rounded-3xl bg-white p-2 shadow-sm">{hits.map((h) => <li key={h.href}><Link href={h.href} className="block rounded-2xl px-4 py-3 text-base text-ink hover:bg-sand">{h.label}</Link></li>)}</ul>}
+        <p className="mt-10 text-xl font-semibold text-cocoa">Popular treatments</p>
         <ul className="mt-3 flex flex-wrap gap-3">
           {["dental-implants", "root-canal-treatment", "invisalign-clear-aligners", "braces", "teeth-whitening"].map((s) => {
             const t = treatments.find((x) => x.slug === s)!;
-            return <li key={s}><Link href={`/treatments/${s}`} className="glass-dark inline-flex min-h-12 items-center rounded-full px-5 text-base text-white hover:bg-white/20">{t.title}</Link></li>;
+            return <li key={s}><Link href={`/treatments/${s}`} className="inline-flex min-h-12 items-center rounded-full border border-cocoa/20 bg-white px-5 text-base text-cocoa hover:bg-cocoa hover:text-white">{t.title}</Link></li>;
           })}
         </ul>
-        <div className="mt-10 flex flex-wrap gap-3"><ActionLink href="/" variant="light">Home</ActionLink><ActionLink href={telHref()} event="click_call" variant="glass">Call {site.phone}</ActionLink></div>
+        <div className="mt-10 flex flex-wrap gap-3"><ActionLink href="/">Home</ActionLink><ActionLink href={telHref()} event="click_call" variant="secondary">Call {site.phone}</ActionLink></div>
       </div>
     </section>
   );

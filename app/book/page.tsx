@@ -26,8 +26,8 @@ export default function Book() {
             </div>
           </div>
           <ul className="card space-y-3 p-6 text-base">
-            <li className="flex gap-3"><Clock size={20} className="mt-0.5 text-brand-600" aria-hidden /> {site.hoursLabel}. {site.sundayLabel}.</li>
-            <li className="flex gap-3"><CalendarCheck size={20} className="mt-0.5 text-brand-600" aria-hidden /> Consultation ₹{site.consultationFee}. We explain options and cost before treatment.</li>
+            <li className="flex gap-3"><Clock size={20} className="mt-0.5 text-brown" aria-hidden /> {site.hoursLabel}. {site.sundayLabel}.</li>
+            <li className="flex gap-3"><CalendarCheck size={20} className="mt-0.5 text-brown" aria-hidden /> Consultation ₹{site.consultationFee}. We explain options and cost before treatment.</li>
           </ul>
         </aside>
       </section>

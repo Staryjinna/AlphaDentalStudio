@@ -20,7 +20,7 @@ export default function Treatments() {
         title="Dental treatments, led by the right specialist"
         lead={`${treatments.length} treatment guides in seven groups, written in plain English. Not sure where to start? Book a consultation and we will guide you.`}
       >
-        <div className="flex flex-wrap gap-3"><ActionLink href="/book" arrow>Book appointment</ActionLink><ActionLink href={whatsappHref()} event="click_whatsapp" variant="glass">Ask on WhatsApp</ActionLink></div>
+        <div className="flex flex-wrap gap-3"><ActionLink book arrow>Book appointment</ActionLink><ActionLink href={whatsappHref()} event="click_whatsapp" variant="secondary">Ask on WhatsApp</ActionLink></div>
       </PageHeader>
       <section className="container-page py-16"><TreatmentsHub /></section>
     </>

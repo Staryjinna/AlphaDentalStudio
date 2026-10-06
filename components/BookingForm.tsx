@@ -7,11 +7,11 @@ import { treatmentGroups } from "@/content/treatment-groups";
 import { doctors } from "@/content/doctors";
 import { track } from "@/lib/analytics";
 
-const field = "mt-1.5 block min-h-12 w-full rounded-2xl border border-ink/15 bg-white px-4 text-base text-ink shadow-sm transition-shadow placeholder:text-muted/70 focus:border-brand-600 focus:shadow-[0_0_0_4px_rgb(31_111_120/.15)] focus:outline-none";
-const label = "block text-sm font-semibold text-brand-900";
+const field = "mt-1.5 block min-h-12 w-full rounded-2xl border border-cocoa/15 bg-white px-4 text-base text-ink transition-shadow placeholder:text-muted/70 focus:border-brown focus:shadow-[0_0_0_4px_rgb(126_78_15/.15)] focus:outline-none";
+const label = "block text-sm font-semibold text-cocoa";
 const initial: BookingState = { status: "idle" };
 
-export function BookingForm({ treatment, doctor, dark = false }: { treatment?: string; doctor?: string; dark?: boolean }) {
+export function BookingForm({ treatment, doctor, bare = false }: { treatment?: string; doctor?: string; bare?: boolean }) {
   const [state, action, pending] = useActionState(submitBooking, initial);
   const provider = process.env.NEXT_PUBLIC_BOOKING_PROVIDER ?? "form";
   const calLink = process.env.NEXT_PUBLIC_CAL_LINK;
@@ -25,7 +25,7 @@ export function BookingForm({ treatment, doctor, dark = false }: { treatment?: s
 
   if (state.status === "ok") {
     return (
-      <div role="status" className="card p-8 text-center">
+      <div role="status" className={`${bare ? "" : "card"} p-8 text-center`}>
         <CheckCircle2 className="mx-auto text-success" size={44} aria-hidden />
         <h3 className="mt-4">Request received</h3>
         <p className="mx-auto mt-2 max-w-md text-base text-muted">{state.message}</p>
@@ -41,7 +41,7 @@ export function BookingForm({ treatment, doctor, dark = false }: { treatment?: s
 
   const err = state.errors ?? {};
   return (
-    <form action={action} className={`card p-6 md:p-8 ${dark ? "" : ""}`} noValidate>
+    <form action={action} className={bare ? "" : "card p-6 md:p-8"} noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="b-name" className={label}>Your name</label>
@@ -98,7 +98,7 @@ export function BookingForm({ treatment, doctor, dark = false }: { treatment?: s
         <div className="hidden" aria-hidden><label>Company<input name="company" tabIndex={-1} autoComplete="off" /></label></div>
         <div className="sm:col-span-2">
           <label className="flex items-start gap-3 text-sm text-muted">
-            <input type="checkbox" name="consent" required className="mt-1 h-5 w-5 shrink-0 accent-[var(--brand-600)]" aria-invalid={!!err.consent} />
+            <input type="checkbox" name="consent" required className="mt-1 h-5 w-5 shrink-0 accent-[var(--brown)]" aria-invalid={!!err.consent} />
             <span>I agree to {site.name} contacting me about this request and storing these details for that purpose. See the <a href="/privacy" className="underline">privacy notice</a>.</span>
           </label>
           {err.consent && <p className="mt-1 text-sm text-red-700">{err.consent}</p>}
@@ -106,7 +106,7 @@ export function BookingForm({ treatment, doctor, dark = false }: { treatment?: s
       </div>
       {state.status === "error" && state.message && <p role="alert" className="mt-4 text-base font-medium text-red-700">{state.message}</p>}
       <button type="submit" disabled={pending}
-        className="sheen mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-accent-btn px-6 text-base font-semibold text-white shadow-[0_10px_28px_-8px_rgb(168_90_40/.7)] transition-colors hover:bg-accent-btn-hover disabled:opacity-60 sm:w-auto">
+        className="sheen mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-cta px-7 text-base font-semibold text-white shadow-[0_12px_28px_-10px_rgb(107_66_32/.8)] transition-colors hover:bg-cta-hover disabled:opacity-60 sm:w-auto">
         <Send size={18} aria-hidden /> {pending ? "Sending…" : "Request appointment"}
       </button>
       <p className="mt-3 text-sm text-muted">We&apos;ll call or WhatsApp you within 2 working hours (Mon–Sat).</p>

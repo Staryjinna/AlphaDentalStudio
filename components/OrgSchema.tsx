@@ -13,7 +13,7 @@ export async function OrgSchema() {
     "@id": `${site.url}/#${b.id}`,
     name: `${site.name}, ${b.name}`,
     url: site.url,
-    logo: `${site.url}/brand/icon.svg`,
+    logo: `${site.url}/brand/mark-rose.png`,
     image: `${site.url}/opengraph-image.png`,
     telephone: b.phone,
     email: site.email,

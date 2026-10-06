@@ -15,7 +15,7 @@ export function VisitUs() {
   return (
     <div>
       <TabsBar label="Branches" value={id} onChange={setId} tabs={branches.map((x) => ({ id: x.id, label: x.name, icon: <MapPin size={16} aria-hidden /> }))} />
-      <div className="mt-6 grid gap-6 lg:grid-cols-5">
+      <div className="mt-6 grid gap-5 lg:grid-cols-5">
         <div className="card flex flex-col justify-between p-7 lg:col-span-2">
           <div>
             <h3>{site.name}, {b.name}</h3>
@@ -31,21 +31,12 @@ export function VisitUs() {
             <ActionLink href={telHref(b.phone)} event="click_call" variant="secondary"><Phone size={18} aria-hidden /> {b.phone}</ActionLink>
           </div>
         </div>
-        <div className="relative min-h-80 overflow-hidden rounded-[var(--radius)] border border-ink/10 bg-brand-100 lg:col-span-3">
+        <div className="relative min-h-80 overflow-hidden rounded-[var(--radius)] border border-cocoa/10 bg-sand lg:col-span-3">
           {loaded[id] ? (
-            <iframe
-              title={`Map of ${site.name}, ${b.name}`}
-              src={`https://www.google.com/maps?q=${query}&output=embed`}
-              loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-              className="absolute inset-0 h-full w-full border-0"
-            />
+            <iframe title={`Map of ${site.name}, ${b.name}`} src={`https://www.google.com/maps?q=${query}&output=embed`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 h-full w-full border-0" />
           ) : (
-            <button
-              type="button"
-              onClick={() => { setLoaded((s) => ({ ...s, [id]: true })); track("click_directions"); }}
-              className="mesh-light absolute inset-0 flex flex-col items-center justify-center gap-3 text-brand-900"
-            >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-900 text-champagne shadow-xl"><Navigation size={26} aria-hidden /></span>
+            <button type="button" onClick={() => { setLoaded((s) => ({ ...s, [id]: true })); track("click_directions"); }} className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-cocoa transition-colors hover:bg-peach/30">
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-cocoa text-peach shadow-xl"><Navigation size={26} aria-hidden /></span>
               <span className="text-lg font-semibold">Load interactive map</span>
               <span className="px-6 text-center text-sm text-muted">Loads Google Maps. Your browser will connect to Google.</span>
             </button>

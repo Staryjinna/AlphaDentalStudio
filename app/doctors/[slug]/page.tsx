@@ -47,7 +47,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
         lead={d.specialties.join(" · ")}
         aside={
           <div className="relative mx-auto aspect-[4/5] w-full max-w-sm">
-            <div className="arch hairline relative h-full overflow-hidden bg-night-2 shadow-[0_40px_80px_-30px_rgb(0_0_0/.7)]">
+            <div className="relative h-full overflow-hidden rounded-t-[999px] rounded-b-[2rem] bg-cocoa-2 shadow-[0_30px_60px_-25px_rgb(62_38_16/.55)]">
               <DoctorAvatar doctor={d} className="h-full w-full" priority sizes="(min-width:1024px) 400px, 80vw" />
             </div>
           </div>
@@ -64,7 +64,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
                   if (!has && !isDev) return null; // hidden in production until the clinic supplies it
                   return (
                     <div key={r.label} className="flex gap-3">
-                      <r.icon size={20} className="mt-1 shrink-0 text-brand-600" aria-hidden />
+                      <r.icon size={20} className="mt-1 shrink-0 text-brown" aria-hidden />
                       <div><dt className="text-sm text-muted">{r.label}</dt><dd className="text-base font-medium text-ink">{has ? String(r.value) : <TodoBadge label={`TODO: ${r.label}`} />}</dd></div>
                     </div>
                   );
@@ -74,10 +74,10 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
           </Reveal>
           <Reveal delay={0.1} className="lg:col-span-7">
             {d.quote && (
-              <figure className="mesh-dark on-dark grain relative overflow-hidden rounded-3xl p-8">
-                <Quote size={36} className="relative text-champagne" aria-hidden />
-                <blockquote className="relative mt-3 font-heading text-2xl leading-snug text-white">&ldquo;{d.quote}&rdquo;</blockquote>
-                <figcaption className="relative mt-4 text-base text-white/75">{d.name}</figcaption>
+              <figure className="on-dark relative overflow-hidden rounded-[2rem] bg-cocoa p-8 md:p-10">
+                <Quote size={36} className="text-peach" aria-hidden />
+                <blockquote className="mt-3 text-2xl font-medium leading-snug text-white">&ldquo;{d.quote}&rdquo;</blockquote>
+                <figcaption className="mt-4 text-base text-white/75">{d.name}</figcaption>
               </figure>
             )}
             {d.bio ? <p className="mt-6 text-lg">{d.bio}</p> : isDev ? <p className="mt-6 rounded-2xl border-2 border-dashed border-amber-400 p-4 text-base">Bio <TodoBadge label="TODO: 80–120 words from the doctor" /></p> : null}

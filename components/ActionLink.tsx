@@ -1,53 +1,60 @@
 "use client";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import type { ComponentProps, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { track, type TrackEvent } from "@/lib/analytics";
 import { Magnetic } from "./Magnetic";
+import { useBooking } from "./BookingModal";
 
-type Variant = "primary" | "secondary" | "ghost" | "light" | "glass";
+type Variant = "primary" | "secondary" | "ghost" | "light" | "outline-light";
 
-const base =
-  "inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 text-base font-semibold transition-all duration-300";
+const base = "group inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 text-[0.95rem] font-semibold transition-all duration-300";
 const variants: Record<Variant, string> = {
-  // the only accent-coloured element type
-  primary: "sheen bg-accent-btn text-white shadow-[0_10px_28px_-8px_rgb(168_90_40/.7)] hover:bg-accent-btn-hover hover:shadow-[0_14px_34px_-8px_rgb(168_90_40/.85)]",
-  secondary: "border border-brand-900/70 text-brand-900 hover:bg-brand-900 hover:text-white",
-  ghost: "text-brand-900 hover:bg-brand-100",
-  light: "bg-white text-brand-900 shadow-md hover:bg-brand-100",
-  glass: "glass-dark text-white hover:bg-white/15",
+  primary: "sheen bg-cta text-white shadow-[0_12px_28px_-10px_rgb(107_66_32/.8)] hover:bg-cta-hover hover:shadow-[0_16px_34px_-10px_rgb(107_66_32/.9)]",
+  secondary: "border-[1.5px] border-cocoa/70 text-cocoa hover:bg-cocoa hover:text-white",
+  ghost: "text-cocoa hover:bg-sand",
+  light: "bg-white text-cocoa shadow-md hover:bg-peach",
+  "outline-light": "border-[1.5px] border-white/70 text-white hover:bg-white hover:text-cocoa",
 };
 
-type Props = Omit<ComponentProps<typeof Link>, "href"> & {
-  href: string;
+type Props = {
+  href?: string;
   variant?: Variant;
   event?: TrackEvent;
   arrow?: boolean;
   magnetic?: boolean;
+  /** Opens the booking sheet instead of navigating (falls back to /book without JS). */
+  book?: { treatment?: string; doctor?: string } | true;
+  className?: string;
   children: ReactNode;
 };
 
-/** Pill link/button with consistent styling; fires an analytics event on click. */
-export function ActionLink({ href, variant = "primary", event, arrow = false, magnetic = false, className = "", children, ...rest }: Props) {
-  const external = /^(https?:|tel:|mailto:)/.test(href);
-  const cls = `group ${base} ${variants[variant]} ${className}`;
-  const onClick = () => event && track(event);
+/** Pill button/link. Fires analytics events; `book` opens the app-wide booking sheet. */
+export function ActionLink({ href = "/book", variant = "primary", event, arrow = false, magnetic = false, book, className = "", children }: Props) {
+  const { open } = useBooking();
+  const cls = `${base} ${variants[variant]} ${className}`;
   const inner = (
     <>
       {children}
-      {arrow && (
-        <ArrowUpRight size={18} aria-hidden className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-      )}
+      {arrow && <ArrowUpRight size={18} aria-hidden className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />}
     </>
   );
-  const el = external ? (
-    <a href={href} className={cls} onClick={onClick} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-      {inner}
-    </a>
-  ) : (
-    <Link href={href} className={cls} onClick={onClick} {...rest}>
-      {inner}
-    </Link>
-  );
+  const external = /^(https?:|tel:|mailto:)/.test(href);
+  let el: ReactNode;
+  if (book) {
+    el = (
+      <Link href={href} className={cls} onClick={(e) => { e.preventDefault(); open(book === true ? {} : book); }}>
+        {inner}
+      </Link>
+    );
+  } else if (external) {
+    el = (
+      <a href={href} className={cls} onClick={() => event && track(event)} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+        {inner}
+      </a>
+    );
+  } else {
+    el = <Link href={href} className={cls} onClick={() => event && track(event)}>{inner}</Link>;
+  }
   return magnetic ? <Magnetic>{el}</Magnetic> : el;
 }
