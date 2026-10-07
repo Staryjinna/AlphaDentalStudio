@@ -16,8 +16,8 @@ export function TabsBar({ tabs, value, onChange, label, dark = false, className 
     refs.current[n]?.focus();
   };
   return (
-    <div className={`no-scrollbar -mx-5 -my-3 overflow-x-auto px-5 py-3 md:mx-0 md:px-0 ${className}`}>
-      <div role="tablist" aria-label={label} className={`inline-flex min-w-max gap-1 rounded-full p-1.5 ${dark ? "bg-white/10" : "bg-sand"}`}>
+    <div className={className}>
+      <div role="tablist" aria-label={label} className={`flex flex-wrap gap-1.5 rounded-[1.75rem] p-1.5 xl:inline-flex xl:flex-nowrap xl:gap-1 xl:rounded-full ${dark ? "bg-white/10" : "bg-sand"}`}>
         {tabs.map((t, i) => {
           const active = t.id === value;
           return (
@@ -25,7 +25,7 @@ export function TabsBar({ tabs, value, onChange, label, dark = false, className 
               key={t.id} ref={(el) => { refs.current[i] = el; }} role="tab" id={`${uid}-${t.id}`}
               aria-selected={active} tabIndex={active ? 0 : -1}
               onClick={() => onChange(t.id)} onKeyDown={(e) => onKey(e, i)}
-              className={`relative inline-flex min-h-12 items-center gap-2 whitespace-nowrap rounded-full px-5 text-[0.95rem] font-semibold transition-colors ${active ? (dark ? "text-cocoa" : "text-white") : dark ? "text-white/85 hover:text-white" : "text-cocoa hover:text-brown"}`}
+              className={`relative inline-flex min-h-12 items-center gap-2 whitespace-nowrap rounded-full px-4 text-[0.92rem] xl:px-5 xl:text-[0.95rem] font-semibold transition-colors ${active ? (dark ? "text-cocoa" : "text-white") : dark ? "text-white/85 hover:text-white" : "text-cocoa hover:text-brown"}`}
             >
               {active && <motion.span layoutId={`${uid}-pill`} className={`absolute inset-0 rounded-full shadow-md ${dark ? "bg-peach" : "bg-cocoa"}`} transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
               <span className="relative z-10 inline-flex items-center gap-2">{t.icon}{t.label}</span>

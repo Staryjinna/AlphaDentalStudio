@@ -2,6 +2,8 @@ import { ExternalLink } from "lucide-react";
 import { ActionLink } from "@/components/ActionLink";
 import { PageHeader } from "@/components/PageHeader";
 import { GoogleReviews, getPlaceData } from "@/components/sections/GoogleReviews";
+import { ReelsSection } from "@/components/sections/ReelsSection";
+import { SectionHeading } from "@/components/SectionHeading";
 import { site } from "@/content/site";
 import { seo } from "@/lib/seo";
 
@@ -15,7 +17,7 @@ export default async function Reviews() {
   const data = await getPlaceData();
   return (
     <>
-      <PageHeader trail={[{ name: "Reviews", href: "/reviews" }]} eyebrow="Reviews" title="What patients say" lead="Live from Google. We never edit, select or invent reviews." />
+      <PageHeader trail={[{ name: "Reviews", href: "/reviews" }]} eyebrow="Reviews" title="What patients say" lead="Patient stories in their own words, and live reviews from Google." />
       {data?.reviews?.length ? (
         <GoogleReviews limit={6} />
       ) : (
@@ -27,6 +29,12 @@ export default async function Reviews() {
           </div>
         </section>
       )}
+      <section className="overflow-hidden bg-sand/70 py-20">
+        <div className="container-page">
+          <SectionHeading eyebrow="Patient stories" title="Hear it from our patients" lead="Short videos from our Instagram, shared by the patients themselves." />
+          <div className="mt-10"><ReelsSection /></div>
+        </div>
+      </section>
     </>
   );
 }

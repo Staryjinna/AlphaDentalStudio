@@ -15,6 +15,7 @@ export function SpecialtiesScroller({ header }: { header: React.ReactNode }) {
   const track = useRef<HTMLUListElement>(null);
   const [pinned, setPinned] = useState(false);
   const [dist, setDist] = useState(0);
+  const [swipe, setSwipe] = useState(0);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
@@ -38,6 +39,7 @@ export function SpecialtiesScroller({ header }: { header: React.ReactNode }) {
         <div className="container-page mb-10 lg:mb-0">{header}</div>
         <motion.ul
           ref={track}
+          onScroll={(e) => { if (!pinned) { const el = e.currentTarget; setSwipe(el.scrollLeft / Math.max(1, el.scrollWidth - el.clientWidth)); } }}
           style={pinned ? { x } : undefined}
           className={`flex gap-5 ${pinned ? "pl-[max(2.5rem,calc((100vw-1240px)/2+2.5rem))] pr-10" : "no-scrollbar snap-x snap-mandatory overflow-x-auto px-5 pb-4 md:px-10"}`}
         >
@@ -59,6 +61,12 @@ export function SpecialtiesScroller({ header }: { header: React.ReactNode }) {
             </li>
           ))}
         </motion.ul>
+        {!pinned && (
+          <div className="container-page mt-4 flex items-center gap-4" aria-hidden>
+            <div className="h-1 flex-1 overflow-hidden rounded-full bg-cocoa/15"><div className="h-full rounded-full bg-brown transition-[width]" style={{ width: `${Math.max(12, swipe * 100)}%` }} /></div>
+            <span className="text-sm font-medium text-muted">Swipe →</span>
+          </div>
+        )}
         {pinned && (
           <div className="container-page"><div className="h-0.5 w-full bg-cocoa/15"><motion.div style={{ width: bar }} className="h-full bg-brown" /></div></div>
         )}

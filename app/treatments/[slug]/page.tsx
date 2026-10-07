@@ -9,6 +9,8 @@ import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TreatmentCard } from "@/components/TreatmentCard";
+import { ReelCard } from "@/components/ReelCard";
+import { reelsByTreatment } from "@/content/reels";
 import { FaqList } from "@/components/sections/FaqList";
 import { TodoBadge } from "@/components/Todo";
 import { isDev } from "@/lib/placeholder";
@@ -41,6 +43,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
   const docs = t.doctors.map(getDoctor).filter((d): d is NonNullable<typeof d> => !!d);
   const related = t.related.map((s) => treatments.find((x) => x.slug === s)).filter((x): x is NonNullable<typeof x> => !!x).slice(0, 3);
   const reviewer = t.reviewConfirmed && t.reviewedBy ? getDoctor(t.reviewedBy) : undefined;
+  const reel = reelsByTreatment(t.slug);
   const hasCost = t.costFrom != null && t.costTo != null;
 
   return (
@@ -134,6 +137,15 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         ) : isDev ? (
           <p className="mt-16 rounded-2xl border-2 border-dashed border-amber-400 p-4 text-base">Cost range hidden <TodoBadge label="TODO: costFrom / costTo" /></p>
         ) : null}
+
+        {reel && (
+          <section className="mt-24 grid items-center gap-10 lg:grid-cols-12" aria-labelledby="watch">
+            <div className="lg:col-span-7">
+              <SectionHeading eyebrow="From our Instagram" title={<span id="watch">{reel.kind === "story" ? "Hear from a patient" : "Watch: " + reel.title}</span>} lead={reel.kind === "story" ? "A short video shared by one of our patients." : "A quick explainer from our team. General information, not a substitute for an examination."} />
+            </div>
+            <div className="mx-auto w-full max-w-[17rem] lg:col-span-5 lg:max-w-xs lg:justify-self-end"><ReelCard reel={reel} /></div>
+          </section>
+        )}
 
         <section className="mt-24 grid gap-10 lg:grid-cols-12" aria-labelledby="faq">
           <div className="lg:col-span-4"><SectionHeading eyebrow="FAQs" title={<span id="faq">Common questions</span>} lead={`About ${t.title.toLowerCase()}.`} /></div>

@@ -13,6 +13,7 @@ import { FirstVisitSteps } from "@/components/sections/FirstVisitSteps";
 import { FaqList } from "@/components/sections/FaqList";
 import { VisitUs } from "@/components/sections/VisitUs";
 import { GoogleReviews } from "@/components/sections/GoogleReviews";
+import { ReelsSection } from "@/components/sections/ReelsSection";
 import { JsonLd } from "@/lib/jsonld";
 import { doctors } from "@/content/doctors";
 import { generalFaqs } from "@/content/faqs";
@@ -92,6 +93,14 @@ export default function Home() {
           <SectionHeading eyebrow="Our team" title="Meet the Smile Architects" lead="Ten clinicians covering every discipline, from endodontics and implants to orthodontics and gum care." />
           <div className="mt-10"><DoctorCarousel doctors={team} dark /></div>
           <div className="mt-6"><ActionLink href="/doctors" variant="outline-light" arrow>See the whole team</ActionLink></div>
+        </div>
+      </section>
+
+      {/* Real stories and tips from the clinic's Instagram */}
+      <section className="overflow-hidden bg-sand/70 py-24" aria-labelledby="stories">
+        <div className="container-page">
+          <SectionHeading eyebrow="Real stories" title={<span id="stories">Real patients, real smiles</span>} lead="Hear from patients in their own words, and pick up simple dental tips from our team." />
+          <div className="mt-10"><ReelsSection /></div>
         </div>
       </section>
 
