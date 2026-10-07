@@ -41,10 +41,10 @@ export function ReelsSection({ initial = "story" }: { initial?: Kind }) {
         </div>
       </div>
 
-      <div ref={ref} className="-mx-5 mt-8 overflow-hidden px-5 md:-mx-10 md:px-10" aria-roledescription="carousel" aria-label={kind === "story" ? "Patient stories" : "Dental tips"} role="tabpanel">
+      <div ref={ref} className="-mx-[1.1rem] mt-6 overflow-hidden px-[1.1rem] md:-mx-8 md:px-8" aria-roledescription="carousel" aria-label={kind === "story" ? "Patient stories" : "Dental tips"} role="tabpanel">
         <ul className="flex gap-4 md:gap-5">
           {items.map((r) => (
-            <li key={r.id} className={`shrink-0 ${kind === "story" ? "w-[74vw] sm:w-[22rem]" : "w-[60vw] sm:w-[17rem]"}`}>
+            <li key={r.id} className={`shrink-0 ${kind === "story" ? "w-[66vw] sm:w-[19rem]" : "w-[52vw] sm:w-[15rem]"}`}>
               <ReelCard reel={r} />
             </li>
           ))}

@@ -5,7 +5,7 @@ export function SectionHeading({ eyebrow, title, lead, align = "left", className
     <Reveal className={`${align === "center" ? "mx-auto text-center" : ""} max-w-2xl ${className}`}>
       <p className="eyebrow">{eyebrow}</p>
       <h2 className="mt-3">{title}</h2>
-      {lead && <p className="mt-4 text-lg text-muted [.on-dark_&]:text-white/80">{lead}</p>}
+      {lead && <p className="mt-3 text-base text-muted md:text-lg [.on-dark_&]:text-white/80">{lead}</p>}
     </Reveal>
   );
 }

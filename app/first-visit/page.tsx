@@ -36,7 +36,7 @@ export default function FirstVisit() {
         <div className="mt-6 flex flex-wrap gap-3"><ActionLink book magnetic arrow>Book appointment</ActionLink><ActionLink href={whatsappHref()} event="click_whatsapp" variant="secondary">WhatsApp us</ActionLink></div>
       </PageHeader>
 
-      <section className="container-page max-w-3xl py-20"><FirstVisitSteps /></section>
+      <section className="container-page max-w-3xl py-10 md:py-14"><FirstVisitSteps /></section>
 
       <section className="container-page grid gap-10 pb-20 lg:grid-cols-2">
         <div>
@@ -57,7 +57,7 @@ export default function FirstVisit() {
       </section>
 
       <section className="container-page pb-16"><VisitUs /></section>
-      <section className="bg-sand/60 py-20"><div className="container-page grid gap-10 lg:grid-cols-12"><div className="lg:col-span-4"><SectionHeading eyebrow="FAQ" title="Before you visit" /></div><div className="lg:col-span-8"><FaqList faqs={generalFaqs} /></div></div></section>
+      <section className="bg-sand/60 py-10 md:py-14"><div className="container-page grid gap-10 lg:grid-cols-12"><div className="lg:col-span-4"><SectionHeading eyebrow="FAQ" title="Before you visit" /></div><div className="lg:col-span-8"><FaqList faqs={generalFaqs} /></div></div></section>
     </>
   );
 }

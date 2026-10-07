@@ -62,7 +62,7 @@ export function Header() {
             id="site-menu"
             initial={{ clipPath: "inset(0 0 100% 0)" }} animate={{ clipPath: "inset(0 0 0% 0)" }} exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
-            className="on-dark fixed inset-0 z-40 overflow-y-auto bg-cocoa pb-32 pt-24 md:pt-28"
+            className="on-dark fixed inset-0 z-40 overflow-y-auto bg-cocoa pb-32 pt-12 md:pt-[4.5rem] md:pt-28"
           >
             <div className="container-page grid gap-12 lg:grid-cols-12">
               <nav aria-label="Main" className="lg:col-span-5">

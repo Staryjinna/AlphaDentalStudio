@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { LayoutGrid } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { TabsBar } from "../TabsBar";
@@ -8,42 +9,24 @@ import { TreatmentCard } from "../TreatmentCard";
 import { treatmentGroups } from "@/content/treatment-groups";
 import { treatments } from "@/content/treatments";
 
-const needs = [
-  { label: "Tooth pain", href: "/treatments/root-canal-treatment" },
-  { label: "Missing tooth", href: "/treatments/dental-implants" },
-  { label: "Crooked teeth", href: "/treatments/invisalign-clear-aligners" },
-  { label: "Whiter smile", href: "/treatments/teeth-whitening" },
-  { label: "Bleeding gums", href: "/treatments/gum-treatment" },
-  { label: "Jaw pain", href: "/treatments/tmj-jaw-pain" },
-  { label: "Child's check-up", href: "/treatments/kids-dentistry" },
-];
-
 export function TreatmentFinder() {
   const [group, setGroup] = useState(treatmentGroups[0].id);
   const g = treatmentGroups.find((x) => x.id === group)!;
   const items = treatments.filter((t) => t.group === group);
   return (
     <div>
-      <TabsBar label="Treatment groups" value={group} onChange={setGroup} tabs={treatmentGroups.map((x) => ({ id: x.id, label: x.title, icon: <GroupIcon id={x.id} size={17} /> }))} />
-      <div className="mt-8 min-h-[24rem]" role="tabpanel">
+      <TabsBar label="Treatment groups" value={group} onChange={setGroup} tabs={treatmentGroups.map((x) => ({ id: x.id, label: x.title, icon: <GroupIcon id={x.id} size={18} /> }))}
+        trailing={<Link href="/treatments" className="flex min-h-[4.25rem] flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-cocoa/40 px-1 py-2 text-center text-[0.72rem] font-semibold leading-tight text-cocoa"><LayoutGrid size={18} aria-hidden /><span>See all</span></Link>}
+      />
+      <div className="mt-6 min-h-[20rem]" role="tabpanel">
         <AnimatePresence mode="wait">
           <motion.div key={group} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.28 }}>
             <p className="max-w-xl text-lg text-muted">{g.blurb}</p>
-            <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((t) => <li key={t.slug}><TreatmentCard t={t} /></li>)}
             </ul>
           </motion.div>
         </AnimatePresence>
-      </div>
-      <div className="mt-12 rounded-[2rem] bg-sand p-6 md:p-8">
-        <p className="text-xl font-semibold text-cocoa">What do you need help with?</p>
-        <ul className="mt-4 flex flex-wrap gap-3">
-          {needs.map((n) => (
-            <li key={n.label}>
-              <Link href={n.href} className="inline-flex min-h-12 items-center rounded-full border border-cocoa/20 bg-white px-5 text-[0.95rem] font-medium text-cocoa transition-all hover:-translate-y-0.5 hover:border-cocoa hover:bg-cocoa hover:text-white">{n.label}</Link>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

@@ -8,29 +8,29 @@ import { doctors } from "@/content/doctors";
 
 export function Hero() {
   return (
-    <section className="on-dark relative isolate flex min-h-[100svh] items-center overflow-hidden bg-cocoa">
+    <section className="on-dark relative isolate flex items-center md:min-h-[92svh] overflow-hidden bg-cocoa">
       <Image src="/images/hero-operatory.jpg" alt="" fill priority sizes="100vw" className="-z-20 animate-kenburns object-cover opacity-75 saturate-[.85]" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-cocoa/85 via-cocoa/60 to-cocoa lg:bg-gradient-to-r lg:from-cocoa/95 lg:via-cocoa/70 lg:to-cocoa/10" />
 
-      <div className="container-page grid items-center gap-10 pb-28 pt-28 lg:grid-cols-12 lg:gap-8 lg:pb-16">
+      <div className="container-page grid items-center gap-7 pb-16 pt-24 lg:grid-cols-12 lg:gap-8 lg:pb-16 lg:pt-28">
         <div className="lg:col-span-7">
-          <Reveal><p className="inline-flex items-center gap-2 rounded-full border border-white/25 px-4 py-1.5 text-xs font-semibold uppercase tracking-[.16em] text-peach"><span className="h-1.5 w-1.5 rounded-full bg-peach" /> {branches.map((b) => b.name).join(" · ")} · Chennai</p></Reveal>
+          <Reveal><p className="inline-flex items-center gap-2 rounded-full border border-white/25 px-3.5 py-1 text-xs font-semibold uppercase tracking-[.16em] text-peach"><span className="h-1.5 w-1.5 rounded-full bg-peach" /> {branches.map((b) => b.name).join(" · ")} · Chennai</p></Reveal>
           <h1 className="mt-6 !text-white">
             <SplitWords text="Personalised dentistry in" /> <span className="text-peach"><SplitWords text="R.A. Puram, Chennai" delay={0.3} /></span>
           </h1>
           <Reveal delay={0.55}>
-            <p className="mt-6 max-w-xl text-lg text-white/85">
+            <p className="mt-4 max-w-xl text-base text-white/85 md:mt-6 md:text-lg">
               {site.tagline} {doctors.length} clinicians, from root canals to Invisalign and implants, in a calm studio where every visit should feel comfortable.
             </p>
           </Reveal>
           <Reveal delay={0.7}>
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-2.5 md:mt-9">
               <ActionLink book magnetic arrow>Book appointment</ActionLink>
               <ActionLink href={whatsappHref()} event="click_whatsapp" variant="outline-light"><MessageCircle size={18} aria-hidden /> WhatsApp us</ActionLink>
             </div>
           </Reveal>
           <Reveal delay={0.85}>
-            <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/80">
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm font-medium text-white/80 md:mt-10">
               <li>{doctors.length} clinicians</li><li aria-hidden className="text-peach">•</li>
               <li>{branches.length} branches</li><li aria-hidden className="text-peach">•</li>
               <li>{site.hoursLabel}</li>
@@ -38,12 +38,12 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[19rem] lg:col-span-5 lg:max-w-sm lg:justify-self-end">
+        <div className="relative mx-auto w-full max-w-[13.5rem] sm:max-w-[16rem] lg:col-span-5 lg:max-w-sm lg:justify-self-end">
           <Reveal delay={0.4}>
             <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-[2rem] border-[6px] border-white/10 bg-cocoa-2 shadow-[0_40px_80px_-30px_rgb(0_0_0/.8)]">
               <Image src="/images/clinic/clinic-work.jpg" alt="A dentist at Alpha Dental Studio treating a patient" fill priority sizes="(min-width:1024px) 380px, 80vw" className="object-cover" />
             </div>
-            <RotatingBadge className="absolute -bottom-8 -left-8 h-32 w-32 md:-left-14 md:h-36 md:w-36" />
+            <RotatingBadge className="absolute -bottom-6 -left-6 h-24 w-24 md:-bottom-8 md:-left-14 md:h-36 md:w-36" />
           </Reveal>
         </div>
       </div>

@@ -39,7 +39,7 @@ export default function About() {
         aside={<div className="relative mx-auto aspect-[4/5] w-full max-w-xs lg:max-w-sm"><div className="relative h-full overflow-hidden rounded-t-[999px] rounded-b-[2rem] bg-cocoa-2 shadow-[0_30px_60px_-25px_rgb(62_38_16/.55)]"><Image src="/images/clinic/clinic-work.jpg" alt="A dentist at Alpha Dental Studio treating a patient" fill priority sizes="(min-width:1024px) 380px, 80vw" className="object-cover" /></div></div>}
       />
 
-      <section className="container-page py-20">
+      <section className="container-page py-10 md:py-14">
         <Reveal className="max-w-3xl">
           <p className="eyebrow">Our mission</p>
           <h2 className="mt-3">&ldquo;Every dental visit should be a positive and comfortable experience.&rdquo;</h2>
@@ -49,7 +49,7 @@ export default function About() {
 
       <div className="border-y border-cocoa/10 py-5 text-[clamp(2rem,6vw,4.5rem)] leading-none"><Marquee outline items={["Innovating smiles.", "Inspiring lives.", "Innovating smiles.", "Inspiring lives."]} /></div>
 
-      <section className="on-dark bg-cocoa py-20">
+      <section className="on-dark bg-cocoa py-10 md:py-14">
         <div className="container-page">
           <SectionHeading eyebrow="Technology" title="Cutting-edge tools, used with care" />
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -60,7 +60,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="container-page py-20">
+      <section className="container-page py-10 md:py-14">
         <SectionHeading eyebrow="Comfort" title="Designed to feel relaxed" lead="Small things make a big difference to how a dental visit feels." />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2">
           {comfort.map((c, i) => (
@@ -69,16 +69,16 @@ export default function About() {
         </ul>
       </section>
 
-      <section className="bg-sand/60 py-20"><div className="container-page"><SectionHeading eyebrow="The ADS wellness menu" title="Little things that make a visit easier" /><div className="mt-10"><WellnessMenu /></div></div></section>
+      <section className="bg-sand/60 py-10 md:py-14"><div className="container-page"><SectionHeading eyebrow="The ADS wellness menu" title="Little things that make a visit easier" /><div className="mt-10"><WellnessMenu /></div></div></section>
 
-      <section className="container-page py-20">
+      <section className="container-page py-10 md:py-14">
         <SectionHeading eyebrow="Two branches" title="Find us in Chennai" />
         <ul className="mt-8 grid gap-5 md:grid-cols-2">
           {branches.map((b) => <li key={b.id} className="card p-6"><h3>{site.name}, {b.name}</h3><p className="mt-2 text-base text-muted">{formatAddress(b).join(", ")}</p></li>)}
         </ul>
       </section>
 
-      <section className="container-page overflow-hidden pb-24">
+      <section className="container-page overflow-hidden pb-12 md:pb-[4.5rem]">
         <SectionHeading eyebrow="Our team" title="Meet the Smile Architects" />
         <div className="mt-8"><DoctorCarousel doctors={doctors} /></div>
         <div className="mt-6"><ActionLink book arrow>Book appointment</ActionLink></div>

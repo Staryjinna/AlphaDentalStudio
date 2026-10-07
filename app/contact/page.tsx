@@ -48,7 +48,7 @@ export default function Contact() {
 
       <section className="container-page pb-16"><VisitUs /></section>
 
-      <section className="container-page grid gap-10 pb-24 lg:grid-cols-12">
+      <section className="container-page grid gap-10 pb-12 md:pb-[4.5rem] lg:grid-cols-12">
         <div className="lg:col-span-5"><SectionHeading eyebrow="Message us" title="Request an appointment" lead="We'll call or WhatsApp you within 2 working hours (Mon–Sat)." /></div>
         <div className="lg:col-span-7"><BookingForm /></div>
       </section>

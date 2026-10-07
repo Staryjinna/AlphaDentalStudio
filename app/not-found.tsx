@@ -18,7 +18,7 @@ export default function NotFound() {
     : [];
   return (
     <section className="min-h-screen bg-sand pt-36">
-      <div className="container-page max-w-2xl pb-24">
+      <div className="container-page max-w-2xl pb-12 md:pb-[4.5rem]">
         <p className="eyebrow">404</p>
         <h1 className="mt-3">We couldn&apos;t find that page</h1>
         <p className="mt-4 text-lg text-muted">Try a search, pick a popular treatment, or get in touch.</p>

@@ -22,14 +22,14 @@ export function DoctorCarousel({ doctors, dark = false }: { doctors: Doctor[]; d
         <button type="button" className={btn} onClick={() => api?.scrollPrev()} disabled={!canPrev} aria-label="Previous doctors"><ArrowLeft size={20} aria-hidden /></button>
         <button type="button" className={btn} onClick={() => api?.scrollNext()} disabled={!canNext} aria-label="Next doctors"><ArrowRight size={20} aria-hidden /></button>
       </div>
-      <div ref={ref} className="-mx-5 overflow-hidden px-5 md:-mx-10 md:px-10" aria-roledescription="carousel" aria-label="Our doctors">
+      <div ref={ref} className="-mx-[1.1rem] overflow-hidden px-[1.1rem] md:-mx-8 md:px-8" aria-roledescription="carousel" aria-label="Our doctors">
         <ul className="flex gap-5">
           {doctors.map((d) => (
-            <li key={d.slug} className="w-[74vw] shrink-0 sm:w-[300px]">
+            <li key={d.slug} className="w-[58vw] shrink-0 sm:w-[250px]">
               <Link href={`/doctors/${d.slug}`} className="card card-hover group block h-full overflow-hidden">
                 <DoctorAvatar doctor={d} className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.04]" sizes="300px" />
-                <div className="p-5">
-                  <h3>{d.name}</h3>
+                <div className="p-4">
+                  <h3 className="!text-cocoa">{d.name}</h3>
                   <p className="mt-0.5 text-sm font-semibold text-tan-deep">{d.degrees}</p>
                   <p className="mt-2 text-base text-muted">{d.role}</p>
                   <span className="mt-4 inline-flex items-center gap-1.5 font-semibold text-cocoa">View profile <ArrowUpRight size={16} aria-hidden className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>

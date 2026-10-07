@@ -31,7 +31,7 @@ export function VisitUs() {
             <ActionLink href={telHref(b.phone)} event="click_call" variant="secondary"><Phone size={18} aria-hidden /> {b.phone}</ActionLink>
           </div>
         </div>
-        <div className="relative min-h-80 overflow-hidden rounded-[var(--radius)] border border-cocoa/10 bg-sand lg:col-span-3">
+        <div className="relative min-h-60 overflow-hidden rounded-[var(--radius)] md:min-h-80 border border-cocoa/10 bg-sand lg:col-span-3">
           {loaded[id] ? (
             <iframe title={`Map of ${site.name}, ${b.name}`} src={`https://www.google.com/maps?q=${query}&output=embed`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 h-full w-full border-0" />
           ) : (

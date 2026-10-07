@@ -91,7 +91,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
           <span className="inline-flex items-center gap-2 rounded-full bg-sand px-4 py-2 text-base"><Clock size={16} className="text-brown" aria-hidden /> {t.duration}</span>
         </div>
 
-        <section className="mt-20" aria-labelledby="signs">
+        <section className="mt-10 md:mt-14" aria-labelledby="signs">
           <SectionHeading eyebrow="Is this right for you?" title={<span id="signs">Signs you may need {t.title.toLowerCase()}</span>} />
           <ul className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {t.signs.map((s, i) => (
@@ -100,7 +100,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
           </ul>
         </section>
 
-        <section className="mt-24" aria-labelledby="how">
+        <section className="mt-12 md:mt-16" aria-labelledby="how">
           <SectionHeading eyebrow="The process" title={<span id="how">{t.title} at Alpha Dental Studio: how it works</span>} />
           <ol className="mt-10 grid gap-5 md:grid-cols-2">
             {t.steps.map((s, i) => (
@@ -117,7 +117,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
           </ol>
         </section>
 
-        <section className="mt-24 grid gap-6 lg:grid-cols-2">
+        <section className="mt-12 md:mt-16 grid gap-6 lg:grid-cols-2">
           <Reveal>
             <div className="on-dark h-full rounded-[2rem] bg-cocoa p-8 md:p-10">
               <h2 className="!text-3xl">Benefits</h2>
@@ -139,7 +139,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         ) : null}
 
         {reel && (
-          <section className="mt-24 grid items-center gap-10 lg:grid-cols-12" aria-labelledby="watch">
+          <section className="mt-12 md:mt-16 grid items-center gap-10 lg:grid-cols-12" aria-labelledby="watch">
             <div className="lg:col-span-7">
               <SectionHeading eyebrow="From our Instagram" title={<span id="watch">{reel.kind === "story" ? "Hear from a patient" : "Watch: " + reel.title}</span>} lead={reel.kind === "story" ? "A short video shared by one of our patients." : "A quick explainer from our team. General information, not a substitute for an examination."} />
             </div>
@@ -147,19 +147,19 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
           </section>
         )}
 
-        <section className="mt-24 grid gap-10 lg:grid-cols-12" aria-labelledby="faq">
+        <section className="mt-12 md:mt-16 grid gap-10 lg:grid-cols-12" aria-labelledby="faq">
           <div className="lg:col-span-4"><SectionHeading eyebrow="FAQs" title={<span id="faq">Common questions</span>} lead={`About ${t.title.toLowerCase()}.`} /></div>
           <div className="lg:col-span-8"><FaqList faqs={t.faqs} /></div>
         </section>
 
         {related.length > 0 && (
-          <section className="mt-24">
+          <section className="mt-12 md:mt-16">
             <SectionHeading eyebrow="Related treatments" title="You may also want to read" />
             <ul className="mt-8 grid gap-5 md:grid-cols-3">{related.map((r) => <li key={r.slug}><TreatmentCard t={r} /></li>)}</ul>
           </section>
         )}
 
-        <section className="mt-24 grid gap-10 lg:grid-cols-12" aria-labelledby="book">
+        <section className="mt-12 md:mt-16 grid gap-10 lg:grid-cols-12" aria-labelledby="book">
           <div className="lg:col-span-5">
             <SectionHeading eyebrow="Book" title={<span id="book">Book {t.title.toLowerCase()}</span>} lead={`Request an appointment and we'll call or WhatsApp you. Consultation ₹${site.consultationFee}; we explain your options and cost before we begin.`} />
             <ActionLink href="/contact" variant="ghost" arrow className="mt-4">Find a branch</ActionLink>

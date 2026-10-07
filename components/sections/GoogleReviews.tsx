@@ -27,7 +27,7 @@ export async function GoogleReviews({ limit = 3 }: { limit?: number }) {
   const reviews = data?.reviews?.filter((r) => r.text?.trim()).slice(0, limit);
   if (!reviews?.length) return null;
   return (
-    <section className="container-page py-20">
+    <section className="container-page py-10 md:py-14">
       <Reveal>
         <p className="eyebrow">Patient reviews</p>
         <h2 className="mt-3">What patients say on Google</h2>

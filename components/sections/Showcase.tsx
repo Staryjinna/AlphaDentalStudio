@@ -8,7 +8,7 @@ type Row = { eyebrow: string; title: string; body: string; bullets: string[]; im
 /** Alternating text/image rows with parallax photography. */
 export function Showcase({ rows }: { rows: Row[] }) {
   return (
-    <div className="space-y-24 md:space-y-32">
+    <div className="space-y-14 md:space-y-20">
       {rows.map((r, i) => (
         <div key={r.title} className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className={`lg:col-span-6 ${i % 2 ? "lg:order-2" : ""}`}>

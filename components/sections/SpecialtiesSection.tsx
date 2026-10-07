@@ -42,19 +42,20 @@ export function SpecialtiesSection() {
   const wrap = useRef<HTMLDivElement>(null);
   const pos = useMotionValue(0);
   const [active, setActive] = useState(0);
-  const [arcMode, setArcMode] = useState(false);
+  const [arcMode, setArcMode] = useState(true);
   const [w, setW] = useState(1200);
   const drag = useRef({ down: false, x: 0, p: 0, moved: false, lastX: 0, v: 0 });
   const cursor = useRef<HTMLDivElement>(null);
   const [cursorLabel, setCursorLabel] = useState("Drag");
   const [swipe, setSwipe] = useState(0);
 
-  const cardW = clamp(w * 0.32, 250, 336);
-  const step = cardW + 10;
+  const small = w < 640;
+  const cardW = small ? clamp(w * 0.68, 220, 300) : clamp(w * 0.32, 250, 336);
+  const step = small ? cardW * 0.8 : cardW + 10;
   const cardH = (cardW * 5.3) / 4;
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px) and (prefers-reduced-motion: no-preference)");
+    const mq = window.matchMedia("(prefers-reduced-motion: no-preference)");
     const on = () => setArcMode(mq.matches);
     on();
     mq.addEventListener("change", on);
@@ -84,10 +85,10 @@ export function SpecialtiesSection() {
     const up = () => {
       const d = drag.current;
       d.down = false;
-      window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); window.removeEventListener("pointercancel", up);
       if (d.moved) goTo(pos.get() - d.v / step * 4);
     };
-    window.addEventListener("pointermove", move); window.addEventListener("pointerup", up);
+    window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); window.addEventListener("pointercancel", up);
   };
   // A click on a side card brings it to the centre; only the centred card navigates. A drag never navigates.
   const onCardClick = (i: number, e: React.MouseEvent) => {
@@ -114,16 +115,16 @@ export function SpecialtiesSection() {
   );
 
   return (
-    <section id="specialties" className="relative overflow-x-clip py-20" aria-labelledby="spec">
+    <section id="specialties" className="relative overflow-x-clip py-10 md:py-14" aria-labelledby="spec">
       <div className="container-page">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-5">
           <div className="max-w-2xl">
-            <Reveal><div aria-hidden className="mb-5 h-px w-40 origin-left bg-cocoa/30" /></Reveal>
+            <Reveal><div aria-hidden className="mb-4 h-px w-32 origin-left bg-cocoa/30" /></Reveal>
             <Reveal><p className="eyebrow flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-brown" /> Our specialties</p></Reveal>
-            <h2 id="spec" className="mt-4 !text-[clamp(2rem,4.4vw,3.4rem)]" aria-label="Built around every part of your smile.">
+            <h2 id="spec" className="mt-4 !text-[clamp(1.7rem,4vw,3rem)]" aria-label="Built around every part of your smile.">
               <SplitWords text="Built around every part of your" /> <em className="font-medium italic text-brown"><SplitWords text="smile." delay={0.35} /></em>
             </h2>
-            <Reveal delay={0.2}><p className="mt-4 text-lg text-muted">Nine areas of dentistry, one team: from everyday care to specialist treatment.</p></Reveal>
+            <Reveal delay={0.2}><p className="mt-3 text-base text-muted md:text-lg">Nine areas of dentistry, one team: from everyday care to specialist treatment.</p></Reveal>
           </div>
           {arrows}
         </div>
@@ -134,8 +135,8 @@ export function SpecialtiesSection() {
           ref={wrap} role="group" aria-roledescription="carousel" aria-label="Specialties" tabIndex={0}
           onPointerDown={onPointerDown} onKeyDown={onKeyDown} onMouseMove={onMouseMove}
           onMouseEnter={() => cursor.current && (cursor.current.style.opacity = "1")} onMouseLeave={() => cursor.current && (cursor.current.style.opacity = "0")}
-          className="relative mt-8 cursor-grab touch-pan-y active:cursor-grabbing [@media(hover:hover)]:cursor-none"
-          style={{ height: cardH + 90, perspective: 1500 }}
+          className="relative mt-5 cursor-grab md:mt-8 touch-pan-y active:cursor-grabbing [@media(hover:hover)]:cursor-none"
+          style={{ height: cardH + (small ? 70 : 90), perspective: small ? 1000 : 1500 }}
         >
           <ul>
             {specialties.map((_, i) => <ArcCard key={i} i={i} pos={pos} step={step} width={cardW} active={active} onGo={goTo} onCardClick={onCardClick} />)}
@@ -158,13 +159,17 @@ export function SpecialtiesSection() {
       )}
 
       {arcMode && (
-        <p className="mt-6 text-center text-lg" aria-live="polite">
-          <strong className="font-semibold text-cocoa">{String(active + 1).padStart(2, "0")}</strong>
-          <span className="text-muted"> / {String(N).padStart(2, "0")}</span>
-          <span className="sr-only"> {specialties[active].title}</span>
-        </p>
+        <div className="mt-4 flex items-center justify-center gap-5 md:mt-6">
+          <button type="button" onClick={() => goTo(active - 1)} disabled={active === 0} aria-label="Previous specialty" className="flex h-11 w-11 items-center justify-center rounded-full border border-cocoa/25 bg-white text-cocoa disabled:opacity-35 md:hidden"><ArrowLeft size={18} aria-hidden /></button>
+          <p className="text-lg" aria-live="polite">
+            <strong className="font-semibold text-cocoa">{String(active + 1).padStart(2, "0")}</strong>
+            <span className="text-muted"> / {String(N).padStart(2, "0")}</span>
+            <span className="sr-only"> {specialties[active].title}</span>
+          </p>
+          <button type="button" onClick={() => goTo(active + 1)} disabled={active === N - 1} aria-label="Next specialty" className="flex h-11 w-11 items-center justify-center rounded-full border border-cocoa/25 bg-white text-cocoa disabled:opacity-35 md:hidden"><ArrowRight size={18} aria-hidden /></button>
+        </div>
       )}
-      <p className="container-page mt-6 text-center text-sm text-muted">Prefer a list? <Link href="/treatments" className="font-semibold text-brown underline underline-offset-4">Browse all treatments</Link></p>
+      <p className="container-page mt-4 text-center text-sm text-muted">Prefer a list? <Link href="/treatments" className="font-semibold text-brown underline underline-offset-4">Browse all treatments</Link></p>
     </section>
   );
 }

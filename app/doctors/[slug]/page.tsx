@@ -85,13 +85,13 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
         </div>
 
         {tx.length > 0 && (
-          <section className="mt-20">
+          <section className="mt-10 md:mt-14">
             <SectionHeading eyebrow="Treatments" title={`Treatments by ${d.name}`} />
             <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{tx.map((t) => <li key={t.slug}><TreatmentCard t={t} /></li>)}</ul>
           </section>
         )}
 
-        <section className="mt-24 grid gap-10 lg:grid-cols-12">
+        <section className="mt-12 md:mt-16 grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5"><SectionHeading eyebrow="Book" title={`Book with ${d.name}`} lead="Request a slot and we will call or WhatsApp you to confirm." /></div>
           <div className="lg:col-span-7"><BookingForm doctor={d.slug} treatment={tx[0]?.slug} /></div>
         </section>
