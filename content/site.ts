@@ -7,6 +7,7 @@ export type Branch = {
   landmark?: string;
   phone: string;
   mapsUrl: string;
+  cid?: string; // Google place CID: shows the real Google place card in the map embed
   geo: { lat: number; lng: number };
 };
 
@@ -21,8 +22,9 @@ export const branches: Branch[] = [
     },
     landmark: "Next to CSI St. Luke's Church", // from the clinic brief; confirm
     phone: "+91 93639 37900",
-    mapsUrl: "https://g.co/kgs/RGN6Pp1",
-    geo: { lat: 0, lng: 0 }, // TODO: copy from the Google Maps pin
+    mapsUrl: "https://www.google.com/maps?cid=3435406455493692534",
+    cid: "3435406455493692534",
+    geo: { lat: 0, lng: 0 }, // TODO: R.A. Puram coordinates (not published by the clinic)
   },
   {
     id: "kottivakkam",
@@ -33,8 +35,8 @@ export const branches: Branch[] = [
       city: "Chennai", state: "Tamil Nadu", postalCode: "600041", country: "IN",
     },
     phone: "+91 86374 38826",
-    mapsUrl: "https://maps.app.goo.gl/xiHkZvmhSbx2V2vVA",
-    geo: { lat: 0, lng: 0 }, // TODO
+    mapsUrl: "https://maps.app.goo.gl/xiHkZvmhSbx2V2vVA", // the clinic's own published link; pin is exact (from that link)
+    geo: { lat: 12.9743426, lng: 80.2565387 },
   },
 ];
 
@@ -56,6 +58,7 @@ export const site = {
   sundayLabel: "Sunday closed",
   consultationFee: 500, // INR. Not on the live site (Practo listing): TODO confirm
   googleMapsUrl: branches[0].mapsUrl,
+  googleProfileUrl: "https://share.google/FqQZSiNvfJ4kgmJhH", // the clinic's Google business profile (reviews live here)
   googlePlaceId: "[for reviews widget]",
   social: {
     facebook: "https://www.facebook.com/alphadentalstudios",
@@ -68,6 +71,12 @@ export const site = {
     "Kottivakkam", "Thiruvanmiyur", "Neelankarai", "Palavakkam",
   ],
 } as const;
+
+/** Real Google map embed: place card via CID when known, otherwise an exact coordinate pin. */
+export const mapEmbedSrc = (b: Branch) =>
+  b.cid
+    ? `https://maps.google.com/maps?cid=${b.cid}&hl=en&output=embed`
+    : `https://maps.google.com/maps?q=${b.geo.lat},${b.geo.lng}&hl=en&z=17&output=embed`;
 
 const digits = (s: string) => s.replace(/\D/g, "");
 export const telHref = (phone: string = site.phone) => {

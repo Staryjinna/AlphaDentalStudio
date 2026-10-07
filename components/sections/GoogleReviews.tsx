@@ -1,10 +1,12 @@
-import Link from "next/link";
-import { Star } from "lucide-react";
-import { Reveal } from "../Reveal";
+import { ExternalLink, Star } from "lucide-react";
+import { ActionLink } from "../ActionLink";
+import { SectionHeading } from "../SectionHeading";
+import { ReviewsCarousel, type ReviewItem } from "./ReviewsCarousel";
+import { snapshotReviews } from "@/content/google-reviews";
 import { site } from "@/content/site";
 import { isPlaceholder } from "@/lib/placeholder";
 
-type Review = { author_name: string; rating: number; text: string; relative_time_description: string };
+type Review = { author_name: string; rating: number; text: string; time?: number; relative_time_description: string };
 type PlaceData = { rating?: number; user_ratings_total?: number; reviews?: Review[] };
 
 export async function getPlaceData(): Promise<PlaceData | null> {
@@ -21,34 +23,29 @@ export async function getPlaceData(): Promise<PlaceData | null> {
   }
 }
 
-/** Live Google reviews. Hidden entirely when there is no key / place id: never shows invented reviews. */
-export async function GoogleReviews({ limit = 3 }: { limit?: number }) {
+/**
+ * Google reviews. Live from the Places API when a key + Place ID are configured (cached 24h);
+ * otherwise the clinic's real reviews copied verbatim from Google (dated, see content/google-reviews.ts).
+ */
+export async function GoogleReviews({ limit = 10, compact = false }: { limit?: number; compact?: boolean }) {
   const data = await getPlaceData();
-  const reviews = data?.reviews?.filter((r) => r.text?.trim()).slice(0, limit);
-  if (!reviews?.length) return null;
+  const live: ReviewItem[] | undefined = data?.reviews
+    ?.filter((r) => r.text?.trim())
+    .slice(0, limit)
+    .map((r) => ({ name: r.author_name, rating: r.rating, text: r.text, date: r.time ? new Date(r.time * 1000).toISOString() : new Date().toISOString() }));
+  const items: ReviewItem[] = live?.length ? live : snapshotReviews.slice(0, limit);
+  const isLive = !!live?.length;
+
   return (
-    <section className="container-page py-10 md:py-14">
-      <Reveal>
-        <p className="eyebrow">Patient reviews</p>
-        <h2 className="mt-3">What patients say on Google</h2>
-        {data?.rating && (
-          <p className="mt-3 flex items-center gap-2 text-lg"><Star className="fill-tan text-tan" size={20} aria-hidden /> <strong>{data.rating.toFixed(1)}</strong> from {data.user_ratings_total} reviews</p>
-        )}
-      </Reveal>
-      <ul className="mt-10 grid gap-6 md:grid-cols-3">
-        {reviews.map((r, i) => (
-          <li key={i}>
-            <Reveal delay={i * 0.08} className="h-full">
-              <figure className="card h-full p-6">
-                <div className="flex gap-0.5" aria-label={`${r.rating} out of 5 stars`}>{Array.from({ length: r.rating }).map((_, k) => <Star key={k} size={16} className="fill-tan text-tan" aria-hidden />)}</div>
-                <blockquote className="mt-3 text-base text-ink">&ldquo;{r.text.length > 260 ? `${r.text.slice(0, 260)}…` : r.text}&rdquo;</blockquote>
-                <figcaption className="mt-4 text-sm text-muted">{r.author_name} · {r.relative_time_description}</figcaption>
-              </figure>
-            </Reveal>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-8"><Link href="/reviews" className="font-semibold text-brown underline underline-offset-4">Read all reviews</Link></p>
+    <section className={compact ? "" : "py-12 md:py-16"} aria-labelledby="g-reviews">
+      <div className={compact ? "" : "container-page"}>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHeading eyebrow="Patient reviews" title={<span id="g-reviews">What patients say on Google</span>} lead={isLive && data?.rating ? `${data.rating.toFixed(1)} from ${data.user_ratings_total} Google reviews.` : "Real reviews from our patients, copied word for word from Google."} />
+          <ActionLink href={site.googleProfileUrl} variant="secondary" arrow className="!min-h-11"><Star size={16} aria-hidden className="fill-[#F5B301] text-[#F5B301]" /> Read all reviews on Google</ActionLink>
+        </div>
+        <div className="mt-6"><ReviewsCarousel reviews={items} /></div>
+        {!isLive && <p className="mt-4 text-sm text-muted">Showing reviews posted in Sept–Oct 2024. <a href={site.googleProfileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-brown underline underline-offset-4">See the latest on Google <ExternalLink size={13} aria-hidden /></a></p>}
+      </div>
     </section>
   );
 }

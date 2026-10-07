@@ -6,7 +6,7 @@ import { getPlaceData } from "./sections/GoogleReviews";
 /** Dentist + MedicalClinic markup for each branch. AggregateRating only from live Google data. */
 export async function OrgSchema() {
   const place = await getPlaceData();
-  const sameAs = Object.values(site.social).filter((u) => !isPlaceholder(u));
+  const sameAs = [...Object.values(site.social).filter((u) => !isPlaceholder(u)), site.googleProfileUrl];
   const nodes = branches.map((b) => ({
     "@context": "https://schema.org",
     "@type": ["Dentist", "MedicalClinic"],
