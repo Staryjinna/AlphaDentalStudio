@@ -5,7 +5,7 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Hero } from "@/components/sections/Hero";
 import { WellnessMenu } from "@/components/sections/WellnessMenu";
-import { SpecialtiesScroller } from "@/components/sections/SpecialtiesScroller";
+import { SpecialtiesSection } from "@/components/sections/SpecialtiesSection";
 import { TreatmentFinder } from "@/components/sections/TreatmentFinder";
 import { Showcase } from "@/components/sections/Showcase";
 import { DoctorCarousel } from "@/components/sections/DoctorCarousel";
@@ -68,10 +68,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Specialties: pinned horizontal scroll on desktop, swipe on mobile */}
-      <section className="pt-24" aria-labelledby="spec">
-        <SpecialtiesScroller header={<SectionHeading eyebrow="Our specialties" title={<span id="spec">Expert teams for every part of your smile</span>} lead="Scroll to explore the nine areas of dentistry we offer." />} />
-      </section>
+      {/* Specialties: 3D arc carousel (drag, click, arrows, keys) */}
+      <SpecialtiesSection />
 
       {/* Treatment finder */}
       <section className="container-page py-24">
